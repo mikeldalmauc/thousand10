@@ -5,7 +5,7 @@ FROM alpine:latest
 RUN apk add --no-cache bash curl ca-certificates watchexec
 
 # Install Lamdera CLI
-RUN curl https://static.lamdera.com/bin/lamdera-1.3.2-linux-arm64 -o /usr/local/bin/lamdera \
+RUN curl https://static.lamdera.com/bin/lamdera-1.3.2-linux-x86_64 -o /usr/local/bin/lamdera \
     && chmod a+x /usr/local/bin/lamdera
 
 WORKDIR /app
@@ -18,5 +18,5 @@ COPY . .
 
 EXPOSE 3000
 
-CMD  ["sh", "-c", "watchexec -e elm -w src -- lamdera rebuild & lamdera live --port 3000"]
-#CMD ["sh", "-c", "tail -f /dev/null"]
+CMD ["sh", "-c", "tail -f /dev/null"]
+

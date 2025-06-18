@@ -107,7 +107,7 @@ view model =
 debugInfo : Model -> Element FrontendMsg
 debugInfo model =
     column []
-        [ text "Debug Infooo" 
+        [ text "Debug" 
        -- , el [] [ text ("Key: " ++ Nav.keyToString model.key) ]
         
         , text ("Device: " ++  Debug.toString model.device) 

@@ -3,21 +3,15 @@ services:
   lamdera:
     build: .
     image: lamdera-dev
+    container_name: lamdera
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=100
     ports:
       - "3000:3000"
     volumes:
       - ./:/app
-    working_dir: /app
-    environment:
-      - LAMDERA_ENV=development
-    command: 
-     [
-        "sh",
-        "-c",
-        "lamdera rebuild && \
-         watchexec --restart --exts elm --watch ./src -- lamdera rebuild & \
-         lamdera live --port 3000"
-      ]
     # command:  ["sh", "-c", "watchexec -e elm -w src -- lamdera rebuild & lamdera live --port 3000"]
-    # ["lamdera", "live", "--port", "3000"]
+    command: ["watchexec", "-r", "-e", "elm", "-w", "src", "--", "lamdera", "live", "--port", "3000"]
+    # command: ["sh", "-c", "lamdera live --port 3000"]
       # ["sh", "-c", "tail -f /dev/null"] # 
