@@ -19,7 +19,7 @@ view model =
 content2 : Element msg
 content2 =
     """
-**NOTE.** *The "View Data" and "Edit Data" tabs are for another project
+**NOTE.** *The "View Data" and  "Edit Data" tabs are for another project
 (a curated public data service for science and education) and will be removed when this project is complete.*
     """
         |> MarkdownThemed.renderFull

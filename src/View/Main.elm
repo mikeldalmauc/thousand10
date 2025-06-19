@@ -21,7 +21,7 @@ noFocus =
 
 view : FrontendModel -> Browser.Document FrontendMsg
 view model =
-    { title = "Lamdera Kitchen Sink"
+    { title = "Thousand 10"
     , body =
         [ Theme.css
         , Html.Lazy.lazy (\ _ -> 

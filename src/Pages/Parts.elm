@@ -63,7 +63,7 @@ header model route config =
             )
             [ link
                 (linkStyle route HomepageRoute)
-                { url = Route.encode HomepageRoute, label = text "Lamdera Kitchen Sink" }
+                { url = Route.encode HomepageRoute, label = text "Thousand 10" }
             ]
         )
 
