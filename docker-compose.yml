@@ -11,7 +11,4 @@ services:
       - "3000:3000"
     volumes:
       - ./:/app
-    # command:  ["sh", "-c", "watchexec -e elm -w src -- lamdera rebuild & lamdera live --port 3000"]
-    command: ["watchexec", "-r", "-e", "elm", "-w", "src", "--", "lamdera", "live", "--port", "3000"]
-    # command: ["sh", "-c", "lamdera live --port 3000"]
-      # ["sh", "-c", "tail -f /dev/null"] # 
+    command: ["watchexec", "--poll", "1s", "-r", "-e", "elm", "-w", "src", "--", "lamdera", "live", "--port", "3000"]

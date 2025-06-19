@@ -24,7 +24,7 @@ app =
         , onUrlChange = UrlChanged
         , update = update
         , updateFromBackend = updateFromBackend
-        , subscriptions = \m -> Sub.none
+        , subscriptions = subscriptions
         , view = view
         }
 
@@ -107,7 +107,7 @@ view model =
 debugInfo : Model -> Element FrontendMsg
 debugInfo model =
     column []
-        [ text "Debug" 
+        [ text "s  s   s" 
        -- , el [] [ text ("Key: " ++ Nav.keyToString model.key) ]
         
         , text ("Device: " ++  Debug.toString model.device) 
