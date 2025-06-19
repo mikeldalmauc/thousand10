@@ -3,6 +3,7 @@ module Frontend exposing (..)
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
 import Html
+import Html.Lazy
 import Html.Attributes as Attr
 import Lamdera
 import Types exposing (..)
@@ -12,10 +13,9 @@ import Browser.Dom
 import Browser.Events
 import Task
 import Element.Font as Font
-
-type alias Model =
-    FrontendModel
-
+import MarkdownThemed
+import View.Main
+import Route
 
 app =
     Lamdera.frontend
@@ -25,7 +25,7 @@ app =
         , update = update
         , updateFromBackend = updateFromBackend
         , subscriptions = subscriptions
-        , view = view
+        , view = View.Main.view
         }
 
 subscriptions : FrontendModel -> Sub FrontendMsg
@@ -35,20 +35,25 @@ subscriptions _ =
         ]
 
 
-init : Url.Url -> Nav.Key -> ( Model, Cmd FrontendMsg )
+init : Url.Url -> Nav.Key -> ( FrontendModel, Cmd FrontendMsg )
 init url key =
-    ( { key = key
-      , device = classifyDevice {width = 0, height = 0}
-      , window = {width = 0, height = 0}
-      }
-    ,  Cmd.batch
-        [ Browser.Dom.getViewport
-            |> Task.perform (\{ viewport } -> GotWindowSize (round viewport.width) (round viewport.height))
-        ]
-    )
+    let
+        route =
+            Route.decode url
+    in
+        ( { key = key
+        , device = classifyDevice {width = 0, height = 0}
+        , window = {width = 0, height = 0}
+        , route = route
+        }
+        ,  Cmd.batch
+            [ Browser.Dom.getViewport
+                |> Task.perform (\{ viewport } -> GotWindowSize (round viewport.width) (round viewport.height))
+            ]
+        )
 
 
-update : FrontendMsg -> Model -> ( Model, Cmd FrontendMsg )
+update : FrontendMsg -> FrontendModel -> ( FrontendModel, Cmd FrontendMsg )
 update msg model =
     case msg of
         UrlClicked urlRequest ->
@@ -81,37 +86,8 @@ scrollToTop =
     Browser.Dom.setViewport 0 0 |> Task.perform (\() -> SetViewport)
 
 
-updateFromBackend : ToFrontend -> Model -> ( Model, Cmd FrontendMsg )
+updateFromBackend : ToFrontend -> FrontendModel -> ( FrontendModel, Cmd FrontendMsg )
 updateFromBackend msg model =
     case msg of
         NoOpToFrontend ->
             ( model, Cmd.none )
-
-
-view : Model -> Browser.Document FrontendMsg
-view model =
-    { title = ""
-    , body =
-        [ 
-            layoutWith  { options = [] }
-            [ width fill
-                , Font.color <| rgb255 0 0 0
-                , Font.size 16
-                , Font.medium
-                ]
-            <|  debugInfo model    
-        ]
-    }
-        
-
-debugInfo : Model -> Element FrontendMsg
-debugInfo model =
-    column []
-        [ text "s  s   s" 
-       -- , el [] [ text ("Key: " ++ Nav.keyToString model.key) ]
-        
-        , text ("Device: " ++  Debug.toString model.device) 
-        , text ("Window Size: " ++ String.fromInt model.window.width ++ "x" ++ String.fromInt model.window.height)
-        ]
-        
-    

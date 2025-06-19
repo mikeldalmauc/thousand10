@@ -11,4 +11,4 @@ services:
       - "3000:3000"
     volumes:
       - ./:/app
-    command: ["watchexec", "--poll", "1s", "-r", "-e", "elm", "-w", "src", "--", "lamdera", "live", "--port", "3000"]
+    command: ["watchexec", "--poll", "1s", "-r", "-e", "elm", "-w", "src", "--", "./restart-lamdera.sh"]
