@@ -26,18 +26,7 @@ css =
     Html.node "style"
         []
         [ Html.text <|
-            fontFace 800 "Figtree-ExtraBold" "Open Sans"
-                ++ fontFace 700 "Figtree-Bold" "Open Sans"
-                ++ fontFace 600 "Figtree-SemiBold" "Open Sans"
-                ++ fontFace 500 "Figtree-Medium" "Open Sans"
-                ++ fontFace 400 "Figtree-Regular" "Open Sans"
-                ++ fontFace 300 "Figtree-Light" "Open Sans"
-                ++ fontFace 700 "Fredoka-Bold" "Fredoka"
-                ++ fontFace 600 "Fredoka-SemiBold" "Fredoka"
-                ++ fontFace 500 "Fredoka-Medium" "Fredoka"
-                ++ fontFace 400 "Fredoka-Regular" "Fredoka"
-                ++ fontFace 300 "Fredoka-Light" "Fredoka"
-                ++ """
+            """
 /* Spinner */
 @-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
 @keyframes spin { 0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }

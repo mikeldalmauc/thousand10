@@ -10,7 +10,8 @@ import Element.Font as Font
 import Route exposing (Route(..))
 import Theme
 import Types
-import View.Color
+import View.Paleta as Paleta
+import View.Icons as Icon
 
 genericNoScrollBar : Types.FrontendModel -> (Types.FrontendModel -> Element Types.FrontendMsg) -> Element Types.FrontendMsg
 genericNoScrollBar model view =
@@ -48,22 +49,36 @@ generic model view =
 
 header : Types.FrontendModel -> Route -> { window : { width : Int, height : Int }, isCompact : Bool } -> Element Types.FrontendMsg
 header model route config =
+    let
+        fontCol = Font.color Paleta.palette.primary.color
+        
+        leftMenu = row [ spacing 24, fontCol, alignLeft] [
+             el [] <| Icon.menubars Paleta.palette.primary.hex
+            ,  link
+                (linkStyle route HomepageRoute)
+                { url = Route.encode HomepageRoute, label = text "Home" }
+            ]
+
+        brandTitle = el [fontCol, centerX] <| text "Thousand 10"
+
+        rightMenu =  row [ spacing 24, fontCol, alignRight] [
+                Icon.user Paleta.palette.neutrals.midGray.hex
+            ]
+    in
     el
-        [ Background.color View.Color.blue
+        [ Background.color Paleta.palette.shades.secondaryDark.color
         , paddingXY 24 16
         , width (px config.window.width)
         , alignTop
         ]
         (wrappedRow
             ([ spacing 24
-             , Background.color View.Color.blue
              , Font.color (rgb 1 1 1)
              ]
-                ++ Theme.contentAttributes
             )
-            [ link
-                (linkStyle route HomepageRoute)
-                { url = Route.encode HomepageRoute, label = text "Thousand 10" }
+            [ leftMenu, 
+              brandTitle, 
+              rightMenu
             ]
         )
 
@@ -71,30 +86,28 @@ header model route config =
 linkStyle : Route -> Route -> List (Attribute msg)
 linkStyle currentRoute route =
     if currentRoute == route then
-        [ Font.underline, Font.color View.Color.yellow ]
+        [ Font.underline,  Font.color Paleta.palette.primary.color]
 
     else
-        [ Font.color View.Color.white ]
+        [ Font.color Paleta.palette.primary.color ]
 
 
 footer : Route -> Types.FrontendModel -> Element msg
 footer route model =
     el
-        [ Background.color View.Color.blue
+        [ Background.color Paleta.palette.shades.secondaryDark.color
         , paddingXY 24 16
         , width fill
         , alignBottom
         ]
         (wrappedRow
             ([ spacing 32
-             , Background.color View.Color.blue
-             , Font.color (rgb 1 1 1)
+             , Font.color Paleta.palette.primary.color
              ]
                 ++ Theme.contentAttributes
             )
             [ link
                 (linkStyle route HomepageRoute)
                 { url = Route.encode HomepageRoute, label = text "Home" }
-            , el [ Background.color View.Color.black, Font.color View.Color.white ] (text "some text message")
             ]
         )

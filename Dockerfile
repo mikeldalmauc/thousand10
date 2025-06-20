@@ -12,6 +12,9 @@ RUN apt-get update && apt-get install -y \
     xz-utils \
     && rm -rf /var/lib/apt/lists/*
 
+
+RUN npm install --save-dev elm
+
 # 2. Instalar watchexec manualmente desde GitHub
 RUN curl -L https://github.com/watchexec/watchexec/releases/download/v1.25.1/watchexec-1.25.1-x86_64-unknown-linux-gnu.tar.xz -o watchexec.tar.xz \
     && tar -xf watchexec.tar.xz \
